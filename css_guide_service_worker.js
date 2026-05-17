@@ -7,7 +7,7 @@ const ASSETS = [
   '/CSS-Guide/css_guide_engine.js',
   '/CSS-Guide/css_guide_a_to_z_properties.js',
   '/CSS-Guide/css_guide_topic_map.js',
-  '/CSS-Guide/manifest.json',
+  '/CSS-Guide/css_guide_manifest.json',
   '/CSS-Guide/css_guide_icon_192.png',
   '/CSS-Guide/css_guide_icon_512.png'
 ];
