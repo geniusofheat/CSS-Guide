@@ -2,7 +2,7 @@ const CACHE_NAME = 'css-guide-v1';
 
 const ASSETS = [
   '/CSS-Guide/',
-  '/CSS-Guide/css_guide.html',
+  '/CSS-Guide/index.html',
   '/CSS-Guide/css_guide.css',
   '/CSS-Guide/css_guide_engine.js',
   '/CSS-Guide/css_guide_a_to_z_properties.js',
