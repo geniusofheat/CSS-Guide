@@ -630,51 +630,58 @@ hr {
 .content-block {
 	padding: 5px;
 }
-    /* ── CSS Guide page-specific styles ───────────────────────── */
+/* ── CSS Guide toggle list ─────────────────────────────────── */
 
-    .topic-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
+.topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
-    .topic-group {
-	  list-style: none;
-      margin: 4px 8px;
-     
-    }
+.version-group {
+  margin: 4px 8px;
+}
 
-    .topic-trigger {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      padding: 8px 5px;
-    }
+.topic-group {
+  margin: 2px 0;
+}
 
-    .topic-trigger h4 {
-      margin: 0;
-    }
+.topic-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 5px;
+}
 
-    .topic-property-list {
-      list-style: disc;
-      padding-left: 50px;
-      margin: 0 0;
-    }
+.topic-trigger h4 {
+  margin: 0;
+}
 
-    .property-item {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 13px;
-      color: #9c9e88;
-      padding: 5px 8px;
-      cursor: pointer;
-    }
+.topic-group-list {
+  list-style: none;
+  padding-left: 40px;
+  margin: 0;
+}
 
-    .property-item:active {
-      color: #c8a96e;
-    }
+.topic-property-list {
+  list-style: disc;
+  padding-left: 40px;
+  margin: 30;
+}
 
+.property-item {
+  font-family: 'Azeret Mono', monospace;
+  font-size: 13px;
+  color: #9c9e88;
+  padding: 5px 5px 5px 20px;
+  cursor: pointer;
+}
+
+.property-item:active {
+  color: #c8a96e;
+}
     .code-block {
       font-family: 'Space Mono', monospace;
       font-size: 12px;

@@ -57,7 +57,7 @@ function build_version_groups() {
 // ─── § 4  TOGGLE HANDLER ─────────────────────────────────────────────────────
 function toggle_item(trigger_el) {
   const parent_el = trigger_el.parentElement;
-  const list_el = parent_el.querySelector(":scope > .topic-property-list");
+  const list_el = parent_el.querySelector(":scope > .topic-group-list, :scope > .topic-property-list");
   const chevron_el = trigger_el.querySelector(".chevron");
 
   if (!list_el) return;
@@ -226,12 +226,12 @@ function build_toggle_list() {
     if (!topics) return;
 
     // Level 1: CSS version
-    html += '<li class="topic-group content-block">';
+    html += '<li class="version-group content-block">';
     html +=   '<div class="topic-trigger" onclick="toggle_item(this)">';
     html +=     '<em class="chevron">▶</em>';
     html +=     '<h4>' + version + '</h4>';
     html +=   '</div>';
-    html +=   '<ol class="topic-property-list hidden">';
+    html +=   '<ul class="topic-group-list hidden">';
 
     // Level 2: topic groups
     topic_order.forEach(function(topic) {
@@ -243,7 +243,7 @@ function build_toggle_list() {
       html +=     '<em class="chevron">▶</em>';
       html +=     '<h4>' + topic + '</h4>';
       html +=   '</div>';
-      html +=   '<ol class="topic-property-list hidden">';
+      html +=   '<ul class="topic-property-list hidden">';
 
       // Level 3: properties
       lessons.forEach(function(lesson) {
@@ -252,11 +252,11 @@ function build_toggle_list() {
         html += '</li>';
       });
 
-      html +=   '</ol>';
+      html +=   '</ul>';
       html += '</li>';
     });
 
-    html +=   '</ol>';
+    html +=   '</ul>';
     html += '</li>';
   });
 
