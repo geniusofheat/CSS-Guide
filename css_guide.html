@@ -101,6 +101,10 @@
   <script src="css_guide_a_to_z_properties.js"></script>
   <script src="css_guide_topic_map.js"></script>
   <script src="css_guide_engine.js"></script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/CSS-Guide/css_guide_service_worker.js');
+  }
+</script>
 </body>
 </html>
