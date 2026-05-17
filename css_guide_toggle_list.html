@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Lato:wght@400;700&family=Playfair+Display:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* ── CSS Guide page-specific styles ───────────────────────── */
+
+    .topic-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .topic-group {
+      margin: 4px 8px;
+     
+    }
+
+    .topic-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 8px 5px;
+    }
+
+    .topic-trigger h4 {
+      margin: 0;
+    }
+
+    .topic-property-list {
+      padding-left: 50px;
+      margin: 0 0;
+    }
+
+    .property-item {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 13px;
+      color: #9c9e88;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+
+    .property-item:active {
+      color: #c8a96e;
+    }
+
+    .code-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: #c8a96e;
+      background: rgba(0,0,0,0.4);
+      border-left: 2px solid rgba(200,169,110,0.4);
+      padding: 10px 22px;
+      margin: 8px 0;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .syntax-example {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: rgba(200,169,110,0.65);
+      text-indent: 0;
+      padding: 2px 8px;
+    }
+
+    #css-back-btn {
+      margin: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BREADCRUMB -->
+  <div id="css-guide-breadcrumb" class="css-guide-breadcrumb">
+    <span class="breadcrumb-active">CSS Guide</span>
+  </div>
+
+  <!-- BACK BUTTON (visible only in detail view) -->
+  <div id="css-back-btn" class="hidden">
+    <button class="blue-btn" onclick="show_topic_list()">← Back to Topics</button>
+  </div>
+
+  <!-- TOGGLE LIST VIEW -->
+  <div id="css-toggle-list" class="content-block"></div>
+
+  <!-- LESSON DETAIL VIEW -->
+  <div id="css-lesson-detail" class="content-block hidden"></div>
+
+  <!-- DATA FILES -->
+  <script src="css_guide_a_to_z_properties.js"></script>
+  <script src="css_guide_topic_map.js"></script>
+  <script src="css_guide_engine.js"></script>
+
+</body>
+</html>
