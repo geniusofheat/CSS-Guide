@@ -109,6 +109,11 @@ function render_lesson_detail(lesson) {
     ? css_guide_default_values[lesson.property]
     : {};
 
+  // Merge additional values data from css_guide_additional_values.js
+  const av = (typeof css_guide_additional_values !== "undefined" && css_guide_additional_values[lesson.property])
+    ? css_guide_additional_values[lesson.property]
+    : {};
+
   // Reference link
   let reference_html = "";
   if (lesson.w3schools_url) {
@@ -141,17 +146,37 @@ function render_lesson_detail(lesson) {
     note_html = '<h4>Note</h4><p>' + lesson.note + '</p>';
   }
 
-  // Values
+  // Values — merge additional values from css_guide_additional_values.js
   let values_html = "";
   if (lesson.values && lesson.values.length) {
     values_html = '<h4>Values</h4><ol>';
     lesson.values.forEach(function(v) {
+
+      // Look up additional values for this value name
+      const extra = av[v.value] || [];
+      let additional_html = "";
+      if (extra.length) {
+        additional_html = '<ul class="additional-values-list">';
+        extra.forEach(function(av_item) {
+          additional_html +=
+            '<li>' +
+              '<h5>' + av_item.value + '</h5>' +
+              '<p>' + av_item.description + '</p>' +
+              (av_item.syntax_example
+                ? '<p class="syntax-example">' + av_item.syntax_example + '</p>'
+                : '') +
+            '</li>';
+        });
+        additional_html += '</ul>';
+      }
+
       values_html +=
         '<li>' +
           '<h5>' + v.value + '</h5>' +
           '<p>' + v.description + '</p>' +
           (v.syntax_example ? '<p class="syntax-example">' + v.syntax_example + '</p>' : '') +
           (v.units_note     ? '<p class="syntax-example">' + v.units_note     + '</p>' : '') +
+          additional_html +
         '</li>';
     });
     values_html += '</ol>';
@@ -193,10 +218,10 @@ function render_lesson_detail(lesson) {
       info_html +
 
       '<h4>Default Value :</h4>' +
-      
+
       '<h4>Syntax :</h4>' +
       '<pre class="code-block">' + lesson.syntax + '</pre>' +
-      
+
       '<p>' + lesson.default_value.charAt(0).toUpperCase() + lesson.default_value.slice(1) + '</p>' +
       (dv.default_value_description
         ? '<p>' + dv.default_value_description + '</p>'
