@@ -51,7 +51,7 @@ p {
   color: #fefeff;
   text-indent: 10px;
   margin: 5 px;
-  padding: 0px;
+  padding: 20px;
   font-size: 16px;
 }
 
@@ -669,6 +669,20 @@ hr {
   list-style: disc;
   padding-left: 40px;
   margin: 30;
+}
+
+#css-lesson-detail h5 {
+  color: #4caf50;
+  text-transform: capitalize;
+}
+
+#css-lesson-detail h3 {
+	
+  text-transform: capitalize;
+}
+
+#css-lesson-detail {
+  align-items: flex-start;
 }
 
 .property-item {

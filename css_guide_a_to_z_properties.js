@@ -1185,8 +1185,8 @@ div:hover {
     category: "CSS1",
     group: "B",
     w3schools_url: "https://www.w3schools.com/cssref/css3_pr_background.php",
-    definition: "Shorthand property for setting all background sub-properties in one declaration: color, image, position, size, repeat, origin, clip, and attachment.",
-    default_value: "transparent none repeat scroll 0% 0% / auto padding-box border-box",
+    definition: "Shorthand property for setting all the background values in one declaration.",
+    default_value: "Transparent, no image, repeat, scroll, 0% 0% / auto, padding-box, border-box.",
     inherited: "no",
     animatable: "yes",
     applies_to: ["all elements"],
@@ -1195,7 +1195,7 @@ div:hover {
 background: color image position/size repeat attachment origin clip;
 Example:
 background: #fff url(img.png) center/cover no-repeat;`,
-    syntax: "background: color image position/size repeat attachment origin clip | initial | inherit;",
+    syntax: "background: color | image | position | size | repeat | attachment | origin | clip | initial | inherit;",
     values: [
       {
         value: "background-color",

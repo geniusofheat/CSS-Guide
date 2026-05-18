@@ -7,33 +7,34 @@ const version_order = ["CSS1", "CSS2", "CSS3", "CSS4"];
 
 // ─── § 2  TOPIC ORDER ────────────────────────────────────────────────────────
 const topic_order = [
-  "Display & Visibility",
-  "Box Model",
-  "Positioning",
-  "Flexbox",
-  "Grid Layout",
-  "Multi-Column Layout",
-  "Float & Clear",
-  "Backgrounds",
-  "Color",
-  "Borders",
-  "Outline",
-  "Fonts & Typography",
-  "Text",
-  "Lists",
-  "Tables",
-  "Animation",
-  "Transitions",
-  "Transforms",
-  "3D & Perspective",
-  "Effects & Filters",
-  "Images & Objects",
-  "Scroll & Snap",
-  "Masking",
-  "Clipping & Shape",
-  "Content & Counters",
-  "Logical Properties",
   "Accessibility & UI Controls",
+  "Animation",
+  "Backgrounds",
+  "Borders",
+  "Box Model",
+  "Clipping & Shape",
+  "Color",
+  "Content & Counters",
+  "Display & Visibility",
+  "Effects & Filters",
+  "Flexbox",
+  "Float & Clear",
+  "Fonts & Typography",
+  "Grid Layout",
+  "Images & Objects",
+  "Lists",
+  "Logical Properties",
+  "Masking",
+  "Multi-Column Layout",
+  "Outline",
+  "Positioning",
+  "Scroll & Snap",
+  "Selectors",
+  "Tables",
+  "Text",
+  "Transforms",
+  "Transitions",
+  "3D & Perspective",
   "Miscellaneous"
 ];
 
@@ -103,11 +104,16 @@ function render_lesson_detail(lesson) {
   const detail_el = document.getElementById("css-lesson-detail");
   if (!detail_el) return;
 
+  // Merge default value data from css_guide_default_values.js
+  const dv = (typeof css_guide_default_values !== "undefined" && css_guide_default_values[lesson.property])
+    ? css_guide_default_values[lesson.property]
+    : {};
+
   // Reference link
   let reference_html = "";
   if (lesson.w3schools_url) {
     reference_html =
-      '<h3>Reference</h3>' +
+      '<h4>Reference</h4>' +
       '<p><a href="' + lesson.w3schools_url + '" target="_blank">W3Schools Link</a></p>';
   }
 
@@ -117,7 +123,7 @@ function render_lesson_detail(lesson) {
     applies_html = '<li><strong>Applies to:</strong> ' + lesson.applies_to.join(", ") + '</li>';
   }
   let info_html =
-    '<h3>Property Info</h3><ul>' +
+    '<h4>Property Info</h4><ul>' +
       (lesson.inherited  !== undefined ? '<li><strong>Inherited:</strong> '   + lesson.inherited  + '</li>' : '') +
       (lesson.animatable !== undefined ? '<li><strong>Animatable:</strong> '  + lesson.animatable + '</li>' : '') +
       applies_html +
@@ -126,19 +132,19 @@ function render_lesson_detail(lesson) {
   // Tip
   let tip_html = "";
   if (lesson.tip) {
-    tip_html = '<h3>Tip</h3><p>' + lesson.tip + '</p>';
+    tip_html = '<h4>Tip</h4><p>' + lesson.tip + '</p>';
   }
 
   // Note
   let note_html = "";
   if (lesson.note) {
-    note_html = '<h3>Note</h3><p>' + lesson.note + '</p>';
+    note_html = '<h4>Note</h4><p>' + lesson.note + '</p>';
   }
 
   // Values
   let values_html = "";
   if (lesson.values && lesson.values.length) {
-    values_html = '<h3>Values</h3><ol>';
+    values_html = '<h4>Values</h4><ol>';
     lesson.values.forEach(function(v) {
       values_html +=
         '<li>' +
@@ -154,7 +160,7 @@ function render_lesson_detail(lesson) {
   // Examples
   let examples_html = "";
   if (lesson.examples && lesson.examples.length) {
-    examples_html = '<h3>Examples</h3><ol>';
+    examples_html = '<h4>Examples</h4><ol>';
     lesson.examples.forEach(function(ex) {
       examples_html +=
         '<li>' +
@@ -169,7 +175,7 @@ function render_lesson_detail(lesson) {
   let browser_html = "";
   if (lesson.browser_support) {
     const bs = lesson.browser_support;
-    browser_html = '<h3>Browser Support</h3><ul>';
+    browser_html = '<h4>Browser Support</h4><ul>';
     if (bs.chrome)  browser_html += '<li><strong>Chrome:</strong> '  + bs.chrome  + '</li>';
     if (bs.edge)    browser_html += '<li><strong>Edge:</strong> '    + bs.edge    + '</li>';
     if (bs.firefox) browser_html += '<li><strong>Firefox:</strong> ' + bs.firefox + '</li>';
@@ -180,15 +186,27 @@ function render_lesson_detail(lesson) {
 
   detail_el.innerHTML =
     '<div class="card">' +
-      '<h3>' + lesson.property + '</h3>' +
+      '<h3>Property Name : ' + lesson.property + '</h3>' +
       reference_html +
       '<hr>' +
       '<p>' + lesson.definition + '</p>' +
       info_html +
-      '<h3>Syntax</h3>' +
+
+      '<h4>Default Value :</h4>' +
+      
+      '<h4>Syntax :</h4>' +
       '<pre class="code-block">' + lesson.syntax + '</pre>' +
-      '<h3>Default Value</h3>' +
-      '<p>' + lesson.default_value + '</p>' +
+      
+      '<p>' + lesson.default_value.charAt(0).toUpperCase() + lesson.default_value.slice(1) + '</p>' +
+      (dv.default_value_description
+        ? '<p>' + dv.default_value_description + '</p>'
+        : '') +
+      (dv.default_value_syntax
+        ? '<pre class="code-block">' + dv.default_value_syntax + '</pre>'
+        : '') +
+      (dv.default_value_applies_to && dv.default_value_applies_to.length
+        ? '<p><strong>Applies to :</strong> ' + dv.default_value_applies_to.join(", ") + '</p>'
+        : '') +
       tip_html +
       note_html +
       values_html +
@@ -229,7 +247,7 @@ function build_toggle_list() {
     html += '<li class="version-group content-block">';
     html +=   '<div class="topic-trigger" onclick="toggle_item(this)">';
     html +=     '<em class="chevron">▶</em>';
-    html +=     '<h2>' + version + '</h2>';
+    html +=     '<h4>' + version + '</h4>';
     html +=   '</div>';
     html +=   '<ul class="topic-group-list hidden">';
 
@@ -241,7 +259,7 @@ function build_toggle_list() {
       html += '<li class="topic-group">';
       html +=   '<div class="topic-trigger" onclick="toggle_item(this)">';
       html +=     '<em class="chevron">▶</em>';
-      html +=     '<h3>' + topic + '</h3>';
+      html +=     '<h4>' + topic + '</h4>';
       html +=   '</div>';
       html +=   '<ul class="topic-property-list hidden">';
 
