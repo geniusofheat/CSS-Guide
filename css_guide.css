@@ -25,8 +25,7 @@ h3 {
   font-family: 'Google Sans', sans-serif;
   font-weight: 400;
   color:#c8a96e;
-  text-align:center;
-  margin-bottom: 10px;
+  margin: 10px 0px 10px 70px;
 }
 
 h4 {
@@ -111,9 +110,6 @@ hr {
   margin: 5px 5px;
 }
 
-.card .orange-btn {
-	margin: 5px auto;
-}
 
 .gold-btn{
   display block;
@@ -305,7 +301,7 @@ hr {
 .card {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   box-sizing: border-box;
   border: 2px solid gold;
@@ -323,6 +319,11 @@ hr {
   padding: 5px;
 
 }
+
+.card .orange-btn {
+	margin: 5px auto;
+}
+
 
 
 .overflow-y {
@@ -666,8 +667,8 @@ hr {
 }
 
 .topic-property-list {
-  list-style: disc;
-  padding-left: 40px;
+  list-style: circle;
+  padding-left: 0px;
   margin: 30;
 }
 
@@ -696,7 +697,8 @@ hr {
 .property-item:active {
   color: #c8a96e;
 }
-    .code-block {
+    
+.code-block {
       font-family: 'Space Mono', monospace;
       font-size: 12px;
       color: #c8a96e;
@@ -709,7 +711,7 @@ hr {
       word-break: break-word;
     }
 
-    .syntax-example {
+.syntax-example {
       font-family: 'Space Mono', monospace;
       font-size: 12px;
       color: rgba(200,169,110,0.65);
@@ -717,6 +719,30 @@ hr {
       padding: 2px 8px;
     }
 
-    #css-back-btn {
+#css-back-btn {
       margin: 8px;
     }
+    
+.expand-title {
+  	cursor: pointer;
+  	font-family: 'Playfair Display', serif;
+  	font-size: 16px;
+  	font-weight: 600;
+  	padding: 10px 0;
+  	border-bottom: 1px solid var(--gold);
+  	color: var(--gold);
+}
+
+.expand-title.expanded {
+  	color: white;
+}
+
+.expand-list {
+	margin-left: 60px;
+  list-style-position: outside;
+}
+
+.expand-list li {
+  display: list-item;
+  padding-left: 10px;
+}

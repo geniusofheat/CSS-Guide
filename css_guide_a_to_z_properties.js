@@ -14,8 +14,7 @@ const atoz_properties_lessons = [
     w3schools_url: "https://www.w3schools.com/cssref/css4_pr_accent-color.php",
     definition: "Sets the accent color for user-interface controls such as checkboxes, radio buttons, range sliders, and progress bars.",
     default_value: "auto",
-    inherited: "yes",
-    animatable: "no",
+   
     applies_to: ["input[type=checkbox]", "input[type=radio]", "input[type=range]", "progress"],
     syntax: "accent-color: auto | <color> | initial | inherit;",
     values: [
