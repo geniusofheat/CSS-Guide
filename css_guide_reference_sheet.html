@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css_guide_engine.js — Class Reference</title>
+  <style>
+    body { background: #0a0a1a; color: #e0e0e0; font-family: monospace; padding: 20px; }
+    h1 { color: #c8a96e; font-size: 1.1em; margin-bottom: 4px; }
+    h2 { color: #c8a96e; font-size: 1em; margin: 30px 0 4px 0; }
+    hr { border-color: #c8a96e; margin: 4px 0 12px 0; }
+    ul { list-style: disc; padding-left: 20px; margin: 0; }
+    li { margin-bottom: 8px; font-size: 0.85em; line-height: 1.5; }
+    .tag  { color: #7ec8e3; }
+    .cls  { color: #c8a96e; }
+    .id   { color: #e394dc; }
+    .desc { color: #ccc; }
+    .fn   { color: #aaa; font-size: 0.8em; }
+    .nocls { color: #888; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<h1>css_guide_engine.js — Full Element & Class Reference</h1>
+
+<!-- ============================================================ -->
+<h2>TIER 1 — Toggle Navigation List</h2>
+<hr>
+<p class="fn">Functions: build_toggle_list &nbsp;|&nbsp; toggle_item &nbsp;|&nbsp; on_version_click</p>
+<ul>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="cls">.topic-list</span> — root list wrapper; contains all version group items</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="cls">.version-group .content-block</span> — list item for a CSS version; two classes on the same element</li>
+  <li><span class="tag">&lt;div&gt;</span> — <span class="cls">.topic-trigger</span> — clickable row wrapper holding the chevron and heading; used at both level 1 and level 2</li>
+  <li><span class="tag">&lt;em&gt;</span> — <span class="cls">.chevron</span> — expand/collapse arrow; triggers toggle_item() on click</li>
+  <li><span class="tag">&lt;h4&gt;</span> — <span class="nocls">no class</span> — version or topic name text; triggers on_version_click() or on_topic_click() on click</li>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="cls">.topic-group-list .hidden</span> — nested list under a version; expands to show topic groups; hidden on load</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="cls">.topic-group</span> — list item for a topic group inside a version</li>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="cls">.topic-property-list .hidden</span> — nested list under a topic; expands to show properties; hidden on load</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="cls">.property-item</span> — list item for an individual CSS property; triggers on_property_click() on click</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>TIER 2 — Version &amp; Topic Detail Card</h2>
+<hr>
+<p class="fn">Functions: render_version_detail &nbsp;|&nbsp; render_topic_detail &nbsp;|&nbsp; toggle_expand &nbsp;|&nbsp; on_topic_click</p>
+<ul>
+  <li><span class="tag">&lt;div&gt;</span> — <span class="cls">.card</span> — main content wrapper for the detail panel</li>
+  <li><span class="tag">&lt;h3&gt;</span> — <span class="nocls">no class</span> — version or topic name displayed as the card heading</li>
+  <li><span class="tag">&lt;p&gt;</span> — <span class="nocls">no class</span> — release date or CSS version line; contains a &lt;strong&gt; label and plain text value</li>
+  <li><span class="tag">&lt;strong&gt;</span> — <span class="nocls">no class</span> — bold label text inside the &lt;p&gt; row (e.g. "Released :" or "CSS Version :")</li>
+  <li><span class="tag">&lt;hr&gt;</span> — <span class="nocls">no class</span> — horizontal divider between the header info and the expand sections</li>
+  <li><span class="tag">&lt;ol&gt;</span> — <span class="cls">.expand-list</span> — ordered list holding all expandable sections (Lessons, Definition, What It Introduced, Note, Tip)</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="nocls">no class</span> — each row inside .expand-list; one per expandable section</li>
+  <li><span class="tag">&lt;div&gt;</span> — <span class="cls">.expand-title</span> — clickable heading for each expand section; .expanded added when open</li>
+  <li><span class="tag">&lt;div&gt;</span> — <span class="cls">.expand-body .hidden</span> — collapsible content area under each expand title; hidden on load</li>
+  <li><span class="tag">&lt;p&gt;</span> — <span class="nocls">no class</span> — text content inside .expand-body (definition, note, tip, what it introduced)</li>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="cls">.topic-property-list</span> — list of lessons inside the Lessons expand section</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="cls">.property-item</span> — each clickable lesson name row inside .topic-property-list</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>TIER 3 — Property Detail Card</h2>
+<hr>
+<p class="fn">Functions: render_lesson_detail &nbsp;|&nbsp; on_property_click</p>
+<ul>
+  <li><span class="tag">&lt;div&gt;</span> — <span class="cls">.card</span> — main content wrapper for the property detail panel</li>
+  <li><span class="tag">&lt;h3&gt;</span> — <span class="nocls">no class</span> — property name heading at top of card (e.g. "Property Name : color")</li>
+  <li><span class="tag">&lt;h4&gt;</span> — <span class="nocls">no class</span> — section label headings throughout the card (Reference, Property Info, Default Value, Syntax, Tip, Note, Values, Examples, Browser Support)</li>
+  <li><span class="tag">&lt;p&gt;</span> — <span class="nocls">no class</span> — definition text, default value text, default value description, applies-to text</li>
+  <li><span class="tag">&lt;a&gt;</span> — <span class="nocls">no class</span> — W3Schools reference link; opens in new tab</li>
+  <li><span class="tag">&lt;hr&gt;</span> — <span class="nocls">no class</span> — horizontal divider below the reference link</li>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="nocls">no class</span> — property info list (Inherited, Animatable, Applies To); also used for browser support list</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="nocls">no class</span> — each row inside the property info list and browser support list</li>
+  <li><span class="tag">&lt;strong&gt;</span> — <span class="nocls">no class</span> — bold label inside each info list row (e.g. "Inherited:", "Chrome:")</li>
+  <li><span class="tag">&lt;pre&gt;</span> — <span class="cls">.code-block</span> — preformatted code block; used for syntax display and code examples</li>
+  <li><span class="tag">&lt;p&gt;</span> — <span class="cls">.syntax-example</span> — inline syntax or units note displayed under a value description</li>
+  <li><span class="tag">&lt;ol&gt;</span> — <span class="nocls">no class</span> — ordered list for the Values section and the Examples section</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="nocls">no class</span> — each value item or example item inside those ordered lists</li>
+  <li><span class="tag">&lt;h5&gt;</span> — <span class="nocls">no class</span> — value name or additional value name inside a values list item</li>
+  <li><span class="tag">&lt;ul&gt;</span> — <span class="cls">.additional-values-list</span> — nested list of extra sub-values beneath a main value item</li>
+  <li><span class="tag">&lt;li&gt;</span> — <span class="nocls">no class</span> — each item inside .additional-values-list; contains h5, p, and optional .syntax-example</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>NAVIGATION &amp; BREADCRUMB</h2>
+<hr>
+<p class="fn">Functions: on_version_click &nbsp;|&nbsp; on_topic_click &nbsp;|&nbsp; on_property_click &nbsp;|&nbsp; show_topic_list</p>
+<ul>
+  <li><span class="tag">&lt;span&gt;</span> — <span class="cls">.breadcrumb-active</span> — each label in the breadcrumb navigation trail</li>
+  <li><span class="tag">&lt;span&gt;</span> — <span class="cls">.breadcrumb-sep</span> — separator symbol between breadcrumb labels ( › )</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>IDs USED FOR SHOW / HIDE</h2>
+<hr>
+<p class="fn">Functions: show_topic_list &nbsp;|&nbsp; render_version_detail &nbsp;|&nbsp; render_topic_detail &nbsp;|&nbsp; render_lesson_detail</p>
+<ul>
+  <li><span class="id">#css-toggle-list</span> — the main toggle navigation list; .hidden added/removed to show or hide it</li>
+  <li><span class="id">#css-lesson-detail</span> — the detail panel; .hidden added/removed to show or hide it</li>
+  <li><span class="id">#css-back-btn</span> — the back button; .hidden added/removed to show or hide it</li>
+  <li><span class="id">#css-guide-breadcrumb</span> — the breadcrumb bar; innerHTML updated on each navigation step</li>
+</ul>
+
+</body>
+</html>
