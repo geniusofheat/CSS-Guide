@@ -60,7 +60,7 @@ function push_nav_state() {
 function toggle_item(chevron_el) {
   const trigger_el = chevron_el.parentElement;
   const parent_el  = trigger_el.parentElement;
-  const list_el    = parent_el.querySelector(":scope > .topic-group-list, :scope > .topic-property-list");
+  const list_el    = parent_el.querySelector(":scope > .topic-group-list, :scope > .topic-property-list, :scope > .property-values-list");
 
   if (!list_el) return;
 
@@ -146,6 +146,35 @@ function on_property_click(property_name) {
   render_lesson_detail(lesson);
 }
 
+// ─── § 6B  VALUE CLICK ───────────────────────────────────────────────────────
+function on_value_click(value_name, property_name) {
+  const lesson = atoz_properties_lessons.find(function(l) {
+    return l.property === property_name;
+  });
+
+  if (!lesson) return;
+
+  push_nav_state();
+
+  const breadcrumb_el = document.getElementById("css-guide-breadcrumb");
+  if (breadcrumb_el) {
+    const topic   = (typeof css_topic_map !== "undefined" && css_topic_map[property_name]) || "Miscellaneous";
+    const version = lesson.category || "";
+    breadcrumb_el.innerHTML =
+      '<span class="breadcrumb-active">CSS Guide</span>' +
+      '<span class="breadcrumb-sep"> › </span>' +
+      '<span class="breadcrumb-active">' + version + '</span>' +
+      '<span class="breadcrumb-sep"> › </span>' +
+      '<span class="breadcrumb-active">' + topic + '</span>' +
+      '<span class="breadcrumb-sep"> › </span>' +
+      '<span class="breadcrumb-active">' + property_name + '</span>' +
+      '<span class="breadcrumb-sep"> › </span>' +
+      '<span class="breadcrumb-active">' + value_name + '</span>';
+  }
+
+  render_value_detail(value_name, lesson);
+}
+
 // ─── § X  TOGGLE EXPAND AND CONTRACT ─────────────────────────────────────────
 // ─── § X  TOGGLE EXPAND AND CONTRACT ─────────────────────────────────────────
 function toggle_expand(clicked_el) {
@@ -206,23 +235,23 @@ function render_version_detail(version_obj) {
       '<hr>' +
       '<ol class="expand-list">' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">Lessons</div>' +
-          '<div class="expand-body hidden">' + lessons_html + '</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">Lesson Topics :</div>' +
+          '<div class="expand-body">' + lessons_html + '</div>' +
         '</li>' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">Definition</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">Definition :</div>' +
           '<div class="expand-body hidden"><p>' + version_obj.definition + '</p></div>' +
         '</li>' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">What It Introduced</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">What It Introduced :</div>' +
           '<div class="expand-body hidden"><p>' + version_obj.what_it_introduced + '</p></div>' +
         '</li>' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">Note</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">Note :</div>' +
           '<div class="expand-body hidden"><p>' + version_obj.note + '</p></div>' +
         '</li>' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">Tip</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">Tip :</div>' +
           '<div class="expand-body hidden"><p>' + version_obj.tip + '</p></div>' +
         '</li>' +
       '</ol>' +
@@ -253,12 +282,11 @@ function render_topic_detail(topic_obj) {
   detail_el.innerHTML =
     '<div class="card">' +
       '<h3>' + topic_obj.topic + '</h3>' +
-      '<h4><strong>CSS Version : </strong>' + topic_obj.css_version + '</h4>' +
-      '<hr>' +
+      
       '<ol class="expand-list">' +
         '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">Lessons</div>' +
-          '<div class="expand-body hidden">' + lessons_html + '</div>' +
+          '<div class="expand-title" onclick="toggle_expand(this)">Property Types :</div>' +
+          '<div class="expand-body">' + lessons_html + '</div>' +
         '</li>' +
         '<li>' +
           '<div class="expand-title" onclick="toggle_expand(this)">Definition</div>' +
@@ -354,20 +382,20 @@ function render_lesson_detail(lesson) {
         additional_html += '</ul>';
       }
 
-      values_html +=
-        '<li>' +
-          '<div class="expand-title" onclick="toggle_expand(this)">' + v.value + '</div>' +
-          '<div class="expand-body hidden">' +
-            '<p>' + v.description + '</p>' +
-            (v.syntax_example ? '<p class="syntax-example">' + v.syntax_example + '</p>' : '') +
-            (v.units_note     ? '<p class="syntax-example">' + v.units_note     + '</p>' : '') +
-            additional_html +
-          '</div>' +
-        '</li>';
+      const safe_value = v.value.replace(/'/g, "\\'");
+const safe_property = lesson.property.replace(/'/g, "\\'");
+values_html +=
+  '<li class="value-item">' +
+    '<div class="expand-title" onclick="toggle_expand(this)">' + v.value + '</div>' +
+    '<div class="expand-body hidden">' +
+      '<p>' + (v.description || '') + '</p>' +
+      (v.syntax_example ? '<pre class="code-block">' + v.syntax_example + '</pre>' : '') +
+    '</div>' +
+  '</li>';
     });
     values_html += '</ol>';
   }
-
+  
   // Examples
   let examples_html = "";
   if (lesson.examples && lesson.examples.length) {
@@ -420,6 +448,76 @@ function render_lesson_detail(lesson) {
       tip_html +
       examples_html +
       browser_html +
+    '</div>';
+
+  document.getElementById("css-toggle-list").classList.add("hidden");
+  document.getElementById("css-back-btn").classList.remove("hidden");
+  detail_el.classList.remove("hidden");
+}
+
+// ─── § 9B  RENDER VALUE DETAIL ───────────────────────────────────────────────
+function render_value_detail(value_name, lesson) {
+  const detail_el = document.getElementById("css-lesson-detail");
+  if (!detail_el) return;
+
+  let values_html = "";
+
+  // Applies to
+  let applies_html = "";
+  if (lesson.applies_to && lesson.applies_to.length) {
+    applies_html = '<h4>Applies To</h4><p>' + lesson.applies_to.join(", ") + '</p>';
+  }
+
+  // Tip
+  let tip_html = "";
+  if (lesson.tip) {
+    tip_html = '<h4>Tip</h4><p>' + lesson.tip + '</p>';
+  }
+
+  // Note
+  let note_html = "";
+  if (lesson.note) {
+    note_html = '<h4>Note</h4><p>' + lesson.note + '</p>';
+  }
+
+  // Examples
+  let examples_html = "";
+  if (lesson.examples && lesson.examples.length) {
+    examples_html = '<h4>Examples</h4><ol>';
+    lesson.examples.forEach(function(ex) {
+      examples_html +=
+        '<li>' +
+          '<p>' + ex.label + '</p>' +
+          '<pre class="code-block">' + ex.code + '</pre>' +
+        '</li>';
+    });
+    examples_html += '</ol>';
+  }
+
+  // Reference
+  let reference_html = "";
+  if (lesson.w3schools_url) {
+    reference_html =
+      '<h4>Reference</h4>' +
+      '<p><a href="' + lesson.w3schools_url + '" target="_blank">W3Schools Link</a></p>';
+  }
+
+  detail_el.innerHTML =
+    '<div class="card">' +
+      '<h3>Value Name : ' + value_name + '</h3>' +
+      '<hr>' +
+      values_html +
+      '<h4>Definition</h4>' +
+      '<p>' + lesson.definition + '</p>' +
+      '<h4>Default Value</h4>' +
+      '<p>' + lesson.default_value.charAt(0).toUpperCase() + lesson.default_value.slice(1) + '</p>' +
+      '<h4>Syntax</h4>' +
+      '<pre class="code-block">' + lesson.syntax + '</pre>' +
+      applies_html +
+      tip_html +
+      note_html +
+      examples_html +
+      reference_html +
     '</div>';
 
   document.getElementById("css-toggle-list").classList.add("hidden");
@@ -502,11 +600,30 @@ function build_toggle_list() {
       html +=   '</div>';
       html +=   '<ul class="topic-property-list hidden">';
 
-      // Level 3 : properties
+      // Level 3 : properties — chevron expands values list
       topic_obj.lessons.forEach(function(property_name) {
         const safe_property = property_name.replace(/'/g, "\\'");
-        html += '<li class="property-item" onclick="on_property_click(\'' + safe_property + '\')">';
-        html +=   property_name;
+        const lesson = atoz_properties_lessons.find(function(l) {
+          return l.property === property_name;
+        });
+
+        html += '<li class="property-group">';
+        html +=   '<div class="topic-trigger">';
+        html +=     '<em class="chevron" onclick="toggle_item(this)">▶</em>';
+        html +=     '<span>' + property_name + '</span>';
+        html +=   '</div>';
+        html +=   '<ul class="property-values-list hidden">';
+
+        if (lesson && lesson.values && lesson.values.length) {
+          lesson.values.forEach(function(v) {
+            const safe_value = v.value.replace(/'/g, "\\'");
+            html += '<li class="value-item" onclick="on_value_click(\'' + safe_value + '\', \'' + safe_property + '\')">';
+            html +=   v.value;
+            html += '</li>';
+          });
+        }
+
+        html +=   '</ul>';
         html += '</li>';
       });
 
