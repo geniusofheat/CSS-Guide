@@ -500,7 +500,7 @@ ol {
 .expand-list li {
   display: list-item;
   padding-left: 10px;
-  color: var(--gol);
+  color: white;
 }
 
 .expand-title {
