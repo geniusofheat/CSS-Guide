@@ -446,7 +446,7 @@ ol {
   font-weight: 600;
   padding: 10px 0;
   border-bottom: 1px solid var(--gold);
-  color: #c2c2c2;
+  color: var(--gold)
 }
 
 /* ================================================================
@@ -476,14 +476,22 @@ ol {
    ================================================================ */
 #css-lesson-detail {
   align-items: flex-start;
+  color: white;
 }
 
 #css-lesson-detail h3 {
+	color: var(--gold);
 }
 
 #css-lesson-detail h5 {
-  color: #4caf50;
+  color: var(--gold);
 }
+
+#css-lesson-detail h4 {
+  color: var(--gold);
+}
+
+
 
 .expand-list {
   margin-left: 60px;
@@ -492,6 +500,7 @@ ol {
 .expand-list li {
   display: list-item;
   padding-left: 10px;
+  color: var(--gol);
 }
 
 .expand-title {
