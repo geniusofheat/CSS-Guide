@@ -1,0 +1,402 @@
+/* ================================================================
+   RESET
+   — Targets all elements. Strips default margin, padding,
+     and box-sizing. Removes tap highlight on mobile touch.
+   ================================================================ */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+/* ================================================================
+   ROOT VARIABLES
+   — Global design tokens.
+     --gold        : primary gold text and border color
+     --text-muted  : dimmed cream for secondary text
+     --blue-btn-bg : radial gradient for the back button
+     --blue-glow   : glow color for the back button shadow
+   ================================================================ */
+:root {
+  --gold: #c8a96e;
+  --text-muted: rgba(240,232,208,0.55);
+  --blue-btn-bg: radial-gradient(circle at center, rgba(173,216,230,0.62) 0%, rgba(0,100,190,0.80) 48%, rgba(5,12,28,0.90) 100%);
+  --blue-glow: rgba(0,202,255,0.5);
+}
+
+/* ================================================================
+   BODY & PAGE
+   — Base page background and full height layout.
+   ================================================================ */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  background: #0a0904;
+}
+
+body {
+  background: linear-gradient(160deg,
+    rgba(0,0,148,0.9) 0%,
+    rgba(22,46,95,0.80) 10%,
+    rgba(0,0,0,0.90) 100%
+  );
+}
+
+/* ================================================================
+   ELEMENT SELECTORS
+   — Base styles for headings and paragraphs used inside
+     cards and detail views throughout the app.
+   ================================================================ */
+h3 {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 400;
+  color: var(--gold);
+  margin: 10px 0;
+}
+
+h4 {
+  font-family: 'Google Sans', sans-serif;
+  color: var(--gold);
+  margin: 10px 0;
+  text-indent: 10px;
+}
+
+h5 {
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--gold);
+  text-align: left;
+  margin: 10px;
+  text-indent: 10px;
+}
+
+p {
+  color: #fefeff;
+  text-indent: 10px;
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+hr {
+  color: #c8a96e;
+  margin-bottom: 10px;
+}  
+
+
+ul > li::before {
+  content: "›";
+  margin-right: 6px;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+ul > li.open::before {
+  transform: rotate(90deg);
+}
+
+/* ================================================================
+   UTILITY
+   — .hidden : toggled by JS to show/hide all sections.
+   ================================================================ */
+.hidden {
+  display: none;
+}
+
+/* ================================================================
+   HEADER
+   — Contains #nav-path and #back-btn. Sticky at top of page.
+   ================================================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(5,12,28,0.95);
+  border-bottom: 1px solid rgba(200,169,110,0.3);
+}
+
+/* ================================================================
+   #nav-path
+   — Sticky navigation path showing current position in the
+     hierarchy. JS injects spans for each level.
+     e.g. CSS Guide › CSS3 › color
+   ================================================================ */
+#nav-path {
+  padding: 8px 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: rgba(200,169,110,0.6);
+}
+
+#nav-path span {
+  color: #c8a96e;
+}
+
+#nav-path .separator {
+  color: rgba(200,169,110,0.4);
+}
+
+/* ================================================================
+   #back-btn
+   — Wrapper for the back button. Hidden by default. JS shows
+     it whenever a detail view is active.
+   ================================================================ */
+#back-btn {
+  margin: 8px;
+}
+
+/* ================================================================
+   .blue-btn
+   — The back navigation button inside #back-btn.
+   ================================================================ */
+.blue-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 3px solid var(--gold);
+  background: var(--blue-btn-bg);
+  color: #e0f4ff;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  transition: filter 0.2s;
+  text-shadow: 0 0 8px rgba(120,200,255,0.4);
+  box-shadow: 0 0 18px var(--blue-glow), inset 0 1px 0 rgba(180,230,255,0.12);
+  padding: 5px;
+  margin: 5px auto;
+}
+
+.blue-btn:active   { background-color: orange; color: #0a0904; }
+.blue-btn:disabled { opacity: 0.3; pointer-events: none; }
+
+/* ================================================================
+   MAIN
+   — Parent container of all content. All sections live here.
+   ================================================================ */
+main {
+  padding: 10px;
+}
+
+/* ================================================================
+   #card
+   — Gold bordered content container.
+   ================================================================ */
+#card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 2px solid gold;
+  border-radius: 16px;
+  background: linear-gradient(160deg,
+    rgba(0,50,120,0.35) 0%,
+    rgba(65,156,185,0.05) 80%,
+    rgba(50,50,50,0.30) 100%
+  );
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(200,169,110,0.12);
+  position: relative;
+  max-width: 100vw;
+  margin: 5px;
+  padding: 15px;
+}
+
+#card::before {
+  content: '◆';
+  position: absolute; top: 12px; right: 14px;
+  color: rgba(200,169,110,0.1);
+  font-size: 28px;
+  pointer-events: none;
+  width: 100%;
+  padding: 0;
+}
+
+/* ================================================================
+   SECTION 1 — RENDER VERSION TOPICS LIST
+   JS Function : render_version_topics_list()
+   Note        : renders on page load
+   — #version-topics-list : top level unordered list of CSS
+     versions. JS populates li items dynamically on load.
+   ================================================================ */
+#version-topics-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#version-topics-list li {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--gold);
+  color: var(--gold);
+  cursor: pointer;
+}
+
+#version-topics-list li:active {
+  background: rgba(200,169,110,0.1);
+}
+
+/* ================================================================
+   SECTION 2 — RENDER LESSON TOPICS LIST
+   JS Function : render_lesson_topics_list()
+   Note        : executes when user taps a #version-topics-list li
+   — #lesson-topics-list : nested ul of lesson topic fields
+     inside the tapped version-topics-list li.
+   ================================================================ */
+#lesson-topics-list {
+  list-style: none;
+  padding: 5px 0 5px 20px;
+  margin: 5px 20px;
+}
+
+
+#lesson-topics-list li {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  padding: 10px 0px;
+  border-bottom: 1px solid rgba(200,169,110,0.3);
+  color: var(--gold);
+  cursor: pointer;
+  margin-left: 0px
+}
+
+#lesson-topics-list li:active {
+  background: rgba(200,169,110,0.1);
+}
+
+/* ================================================================
+   SECTION 3 — RENDER PROPERTIES LIST
+   JS Function : render_properties()
+   Note        : executes when user taps a #lesson-topics-list li
+   — #properties-list : ordered list of property names nested
+     inside the tapped lesson-topics-list li.
+   ================================================================ */
+
+#properties-list {
+  padding: 5px 0 5px 20px;
+  margin: 5px 20px;
+}
+
+#properties-list li {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(200,169,110,0.3);
+  color: var(--gold);
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#properties-list li:active {
+  background: rgba(200,169,110,0.1);
+}
+
+/* ================================================================
+   PROPERTY LESSON
+   JS Function : render_lesson_topics()
+   Note        : executes when user taps a #properties-list li
+   — #property-lesson : div sitting outside the clicked
+     properties-list li as an adjacent sibling. Contains
+     #property-lesson-titles.
+   ================================================================ */
+#property-lesson {
+  position: relative;
+  margin-left: calc(-1 * (100vw - 100%) / 2);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100vw;
+}
+
+#property-lesson-titles {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#property-lesson-titles li {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(200,169,110,0.3);
+  color: var(--gold);
+  cursor: pointer;
+}
+
+#property-lesson-titles li:active {
+  background: rgba(200,169,110,0.1);
+}
+
+/* ================================================================
+   SECTION 4 — RENDER VALUES
+   JS Function : render_values()
+   Note        : executes when user taps the #values-list li
+   — #values-list : unordered list of value names nested inside
+     the Values li. Visible on load — not hidden.
+   ================================================================ */
+
+#values-list {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+#values-list li {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  padding: 10px;
+  border-bottom: 1px solid rgba(200,169,110,0.2);
+  color: var(--gold);
+  cursor: pointer;
+}
+
+#values-list li:active {
+  background: rgba(200,169,110,0.1);
+}
+
+#values-list li p {
+  color: #fefeff;
+  font-size: 14px;
+  padding: 8px 10px;
+  text-indent: 0;
+  margin: 5px 0;
+}
+
+#values-list li code {
+  margin: 5px 0;
+}
+
+/* ================================================================
+   code
+   — Monospace preformatted block for CSS syntax examples
+     and code snippets. Rendered as <code> element.
+   ================================================================ */
+code {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #c8a96e;
+  background: rgba(0,0,0,0.4);
+  border-left: 2px solid rgba(200,169,110,0.4);
+  padding: 10px 22px;
+  margin: 8px 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ================================================================
+   .chevron
+   — Triangle arrow rendered as <em> before each expandable
+     row. Toggled between ▶ and ▼ by the JS engine.
+   ================================================================ */
+.chevron {
+  margin-right: 8px;
+  color: #c8a96e;
+  font-style: normal;
+}
