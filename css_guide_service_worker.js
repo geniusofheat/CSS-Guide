@@ -6,8 +6,8 @@ const ASSETS = [
   '/CSS-Guide/css_guide_stylesheet.css',
   '/CSS-Guide/css_guide_engine.js',
   '/CSS-Guide/css_guide_manifest.json',
-  '/CSS-Guide/css_guide_icon_192.png',
-  '/CSS-Guide/css_guide_icon_512.png'
+  '/CSS-Guide/icon_192.png',
+  '/CSS-Guide/icon_512.png'
 ];
 
 // Install — cache all core assets
